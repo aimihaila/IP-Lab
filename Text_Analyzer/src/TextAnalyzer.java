@@ -31,7 +31,7 @@ public class TextAnalyzer {
         // receives the text and uses textSeperator to create the list of possible concepts from the text
 
         this.textSeparator = new GrammarSeparator();
-        this,textSeparator.createList(text);
+        this.textSeparator.createList(text);
         // this.textSeparator.getPassingWords(); <- list of Strings (nouns from text)
         this.listOfWords = this.textSeparator.getPassingWords();
         this.memory = new LongMemory();
