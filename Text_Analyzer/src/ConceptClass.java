@@ -15,6 +15,11 @@ public class ConceptClass {
 //        this.keywords.addAll(keywords);
     }
 
+    public String getNameClass() {
+        return nameClass;
+    }
 
-
+    public Set<String> getKeywords() {
+        return keywords;
+    }
 }
