@@ -1,4 +1,4 @@
-public class Concept {
+public class Concept implements Comparable<Concept>{
     private String name;
     private ConceptClass conceptClass;
     private String url;
@@ -6,6 +6,18 @@ public class Concept {
 
     Concept() {
         this.foundInDB = false;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ConceptClass getConceptClass() {
+        return conceptClass;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public void setName(String name) {
@@ -20,11 +32,26 @@ public class Concept {
         this.url = url;
     }
 
+
     public void setFoundInDB(Boolean foundInDB) {
         this.foundInDB = foundInDB;
     }
 
     public Boolean getFoundInDB() {
         return foundInDB;
+    }
+
+    @Override
+    public int compareTo(Concept obj) {
+        try {
+            if (this == obj) return 0;
+            int code = this.name.compareTo(obj.name);
+            if (code != 0)
+                return code;
+
+            return 0;
+        } catch (NullPointerException e) {
+            return 1;
+        }
     }
 }

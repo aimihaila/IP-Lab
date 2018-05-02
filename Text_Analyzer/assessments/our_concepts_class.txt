@@ -1,0 +1,10 @@
+{
+name = [animals]
+keywords = ["Kingdom: Animalia"]
+}
+
+//testare
+{
+name = [person]
+keywords = ["human", "man", "woman"]
+}
