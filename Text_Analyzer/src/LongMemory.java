@@ -48,5 +48,23 @@ public class LongMemory {
         return obj;
     }
 
-    // TODO: the add function
+    public void add(String conceptKey, String conceptName, String conceptClassName, Set<String> conceptClassKeywords, String conceptUrl) {
+        String keywords = "";
+        for (String keyword : conceptClassKeywords) { //traverse set of keywords and add them in on String
+            keywords += keyword + ",";
+        }
+        keywords = keywords.substring(0, keywords.length()-1);
+        String query = "INSERT INTO concepts (concept_key, concept_name, concept_class_name, concept_class_keywords, concept_url) " +
+                "       VALUES " +
+                "       ('" + conceptKey + "', '" + conceptName + "', '" + conceptClassName + "','" + keywords + "', '" + conceptUrl + "')";
+        try {
+            Statement statement = connection.createStatement();
+            int resultSet = statement.executeUpdate(query);
+            if (resultSet == 1) {
+                search(conceptKey); //we don't have Concept type in DB so we use search() to set it as found in DB
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
