@@ -50,10 +50,12 @@ public class LongMemory {
 
     public void add(String conceptKey, String conceptName, String conceptClassName, Set<String> conceptClassKeywords, String conceptUrl) {
         String keywords = "";
-        for (String keyword : conceptClassKeywords) { //traverse set of keywords and add them in on String
-            keywords += keyword + ",";
+        if(!conceptClassKeywords.isEmpty()) {
+            for (String keyword : conceptClassKeywords) { //traverse set of keywords and add them in on String
+                keywords += keyword + ",";
+            }
+            keywords = keywords.substring(0, keywords.length() - 1);
         }
-        keywords = keywords.substring(0, keywords.length()-1);
         String query = "INSERT INTO concepts (concept_key, concept_name, concept_class_name, concept_class_keywords, concept_url) " +
                 "       VALUES " +
                 "       ('" + conceptKey + "', '" + conceptName + "', '" + conceptClassName + "','" + keywords + "', '" + conceptUrl + "')";
