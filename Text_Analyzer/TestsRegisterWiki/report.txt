@@ -1,0 +1,19 @@
+Raport erori :
+- Animale ce nu sunt recunoscute ca fiind animale pe wikipedia 
+nu le poti introduce desi ele sunt recunoscute ca si animale in constiinta populara Ex: Seal
+- Nu pot introduce un animal cu caractere speciale in nume
+ deoarece da eraore pt url, applicatia folosind direct url ex : Dog (puppy)
+- Nume de rasa de animale nu merg 
+Ex: Abyssinian (pe google daca scrii doar asta da direct rasa de pisica desi poate fi si o referire la oameni)
+- Din teste am gasit un cuvant care da found, dar e planta si nu animal : Swainsonia
+- la introducerea cuvantului țâîăț il traduce in datorita caracterelor in limba romana-> %C8%9A%C3%A2%C3%AE%C4%83%C8%9B
+- cand introduc un animal ce are in terminatie un numar da eroare la url Ex: horse12 
+desi horse este animal si ar trebui sa faca abstractie de nr din final, eliminand ce nu este necesar
+Acelasi caz si in introducerea sirului : horse car
+Ar trebui sa dea found pentru horse
+- cand introduc : "   horse" e ok, cand introduc "    horse    " e iar ok, iar cand introduc "   horse  1" da eroare la url
+la fel si pentru "(horse)"
+- cuvantul "animal" sau "animals" dau ca si found desi acesta este denumirea clasei, nu denumirea vreunei specii de animale
+- cuvantul "cock" care inseamana cocos nu il gaseste, intr-adevar este o pasare, dar cuvantul "flamingo" il gaseste
+ si multe alte specii de pasari
+
