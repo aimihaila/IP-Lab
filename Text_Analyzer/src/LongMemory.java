@@ -38,6 +38,17 @@ public class LongMemory {
         }
     }
 
+    public LongMemory(String database, String username, String password) { //specify to which database to connect along with the username and password
+        String url = "jdbc:mysql://localhost:3306/" + database + "?autoReconnect=true&useSSL=false"; //database url with auto reconnect and SSL disabled
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(url,username,password); //try to connect to the database
+        }
+        catch (Exception e) {
+            System.err.println("Connection error: " + e); //catch the connection error
+        }
+    }
+
     public Concept search(String word) {
         Concept obj = new Concept();
         String query = "SELECT * FROM concepts WHERE LOWER(key_concept) LIKE BINARY '" + word.toLowerCase() + "'"; // the query [like binary is some sort of =]
