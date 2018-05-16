@@ -25,20 +25,33 @@ public class LongMemory {
         }
     }
 
+    public LongMemory(String database) { //specify to which database to connect
+        String url = "jdbc:mysql://localhost:3306/" + database + "?autoReconnect=true&useSSL=false"; //database url with auto reconnect and SSL disabled
+        String username = "root";
+        String password = "";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(url,username,password); //try to connect to the database
+        }
+        catch (Exception e) {
+            System.err.println("Connection error: " + e); //catch the connection error
+        }
+    }
+
     public Concept search(String word) {
         Concept obj = new Concept();
-        String query = "SELECT * FROM concepts WHERE concept_key LIKE BINARY '" + word + "'"; // the query [like binary is some sort of =]
+        String query = "SELECT * FROM concepts WHERE LOWER(key_concept) LIKE BINARY '" + word.toLowerCase() + "'"; // the query [like binary is some sort of =]
         try { //try to execute the query
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) { //if there is a result then update the concept with name, url, etc..
                 obj.setFoundInDB(true);
-                obj.setName(resultSet.getString("concept_name"));
-                obj.setUrl(resultSet.getString("concept_url"));
-                ConceptClass conceptClass = new ConceptClass(resultSet.getString("concept_class_name"));
-                String[] keys = resultSet.getString("concept_class_keywords").split(",");
-                Set<String> keywords = new TreeSet<>(Arrays.asList(keys));
-                conceptClass.setKeywords(keywords);
+                obj.setName(resultSet.getString("key_concept"));
+                obj.setUrl(resultSet.getString("link"));
+                obj.setConceptSubclass(resultSet.getString("subclass"));
+                ConceptClass conceptClass = new ConceptClass(resultSet.getString("class"));
+                String[] keys = resultSet.getString("characteristics").split(",");
+                conceptClass.setCharacteristics(new TreeSet<>(Arrays.asList(keys)));
                 obj.setConceptClass(conceptClass);
             }
         }
