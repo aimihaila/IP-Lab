@@ -25,6 +25,7 @@ public class LongMemory {
         }
     }
 
+<<<<<<< HEAD
     public Object search(String table_name, String key) {
         Object obj;
         String query;
@@ -43,6 +44,47 @@ public class LongMemory {
             }
             catch (SQLException e) {
                 System.err.println("SQL Exception: " + e);
+=======
+    public LongMemory(String database) { //specify to which database to connect
+        String url = "jdbc:mysql://localhost:3306/" + database + "?autoReconnect=true&useSSL=false"; //database url with auto reconnect and SSL disabled
+        String username = "root";
+        String password = "";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(url,username,password); //try to connect to the database
+        }
+        catch (Exception e) {
+            System.err.println("Connection error: " + e); //catch the connection error
+        }
+    }
+
+    public LongMemory(String database, String username, String password) { //specify to which database to connect along with the username and password
+        String url = "jdbc:mysql://localhost:3306/" + database + "?autoReconnect=true&useSSL=false"; //database url with auto reconnect and SSL disabled
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(url,username,password); //try to connect to the database
+        }
+        catch (Exception e) {
+            System.err.println("Connection error: " + e); //catch the connection error
+        }
+    }
+
+    public Concept search(String word) {
+        Concept obj = new Concept();
+        String query = "SELECT * FROM concepts WHERE LOWER(key_concept) LIKE BINARY '" + word.toLowerCase() + "'"; // the query [like binary is some sort of =]
+        try { //try to execute the query
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            if (resultSet.next()) { //if there is a result then update the concept with name, url, etc..
+                obj.setFoundInDB(true);
+                obj.setName(resultSet.getString("key_concept"));
+                obj.setUrl(resultSet.getString("link"));
+                obj.setConceptSubclass(resultSet.getString("subclass"));
+                ConceptClass conceptClass = new ConceptClass(resultSet.getString("class"));
+                String[] keys = resultSet.getString("characteristics").split(",");
+                conceptClass.setCharacteristics(new TreeSet<>(Arrays.asList(keys)));
+                obj.setConceptClass(conceptClass);
+>>>>>>> a4feb55bba34acc17c85d36eb5c46943f6941eff
             }
         }
         else {
