@@ -3,6 +3,7 @@ import java.util.TreeSet;
 
 public class Concept implements Comparable<Concept>{
     private String name;
+    private String className;
     private ConceptClass conceptClass;
     private String conceptSubclass;
     private String url;
@@ -60,6 +61,8 @@ public class Concept implements Comparable<Concept>{
     public Boolean getFoundInDB() {
         return foundInDB;
     }
+
+    public void setClassName(String className) {this.className = className;}
 
     @Override
     public int compareTo(Concept obj) {

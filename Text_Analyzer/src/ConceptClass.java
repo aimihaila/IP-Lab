@@ -3,6 +3,7 @@ import java.util.TreeSet;
 
 public class ConceptClass implements Comparable<ConceptClass>{
     private String nameClass;
+    private String subclass;
     private Set<String> keywords = new TreeSet<>();
     private Set<String> characteristics = new TreeSet<>();
 
@@ -35,6 +36,10 @@ public class ConceptClass implements Comparable<ConceptClass>{
     }
 
     public Set<String> getCharacteristics() { return characteristics; }
+
+    public void setSubclass (String subclass) { this.subclass = subclass; }
+
+    public String getSubclass () { return this.subclass; }
 
     @Override
     public int compareTo(ConceptClass obj) {
