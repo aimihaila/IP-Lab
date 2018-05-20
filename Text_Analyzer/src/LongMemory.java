@@ -25,26 +25,6 @@ public class LongMemory {
         }
     }
 
-<<<<<<< HEAD
-    public Object search(String table_name, String key) {
-        Object obj;
-        String query;
-        if(table_name.equals("concepts")) {
-            obj = new Concept();
-            query = "SELECT * FROM " + table_name + " WHERE LOWER(key_concept) LIKE BINARY '" + key.toLowerCase() + "'";
-            try {
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
-                if(resultSet.next()) {
-                    ((Concept) obj).setFoundInDB(true);
-                    ((Concept) obj).setName(resultSet.getString("key_concept"));
-                    ((Concept) obj).setUrl(resultSet.getString("link"));
-                    ((Concept) obj).setClassName("class_name");
-                }
-            }
-            catch (SQLException e) {
-                System.err.println("SQL Exception: " + e);
-=======
     public LongMemory(String database) { //specify to which database to connect
         String url = "jdbc:mysql://localhost:3306/" + database + "?autoReconnect=true&useSSL=false"; //database url with auto reconnect and SSL disabled
         String username = "root";
@@ -69,22 +49,24 @@ public class LongMemory {
         }
     }
 
-    public Concept search(String word) {
-        Concept obj = new Concept();
-        String query = "SELECT * FROM concepts WHERE LOWER(key_concept) LIKE BINARY '" + word.toLowerCase() + "'"; // the query [like binary is some sort of =]
-        try { //try to execute the query
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-            if (resultSet.next()) { //if there is a result then update the concept with name, url, etc..
-                obj.setFoundInDB(true);
-                obj.setName(resultSet.getString("key_concept"));
-                obj.setUrl(resultSet.getString("link"));
-                obj.setConceptSubclass(resultSet.getString("subclass"));
-                ConceptClass conceptClass = new ConceptClass(resultSet.getString("class"));
-                String[] keys = resultSet.getString("characteristics").split(",");
-                conceptClass.setCharacteristics(new TreeSet<>(Arrays.asList(keys)));
-                obj.setConceptClass(conceptClass);
->>>>>>> a4feb55bba34acc17c85d36eb5c46943f6941eff
+    public Object search(String table_name, String key) {
+        Object obj;
+        String query;
+        if(table_name.equals("concepts")) {
+            obj = new Concept();
+            query = "SELECT * FROM " + table_name + " WHERE LOWER(key_concept) LIKE BINARY '" + key.toLowerCase() + "'";
+            try {
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(query);
+                if(resultSet.next()) {
+                    ((Concept) obj).setFoundInDB(true);
+                    ((Concept) obj).setName(resultSet.getString("key_concept"));
+                    ((Concept) obj).setUrl(resultSet.getString("link"));
+                    ((Concept) obj).setClassName("class_name");
+                }
+            }
+            catch (SQLException e) {
+                System.err.println("SQL Exception: " + e);
             }
         }
         else {
