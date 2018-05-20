@@ -3,17 +3,46 @@ import java.util.TreeSet;
 
 public class Concept implements Comparable<Concept>{
     private String name;
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
     private String className;
     private ConceptClass conceptClass;
+
+    public String getConceptSubclass() {
+        return conceptSubclass;
+    }
+
+    public void setConceptSubclass(String conceptSubclass) {
+        this.conceptSubclass = conceptSubclass;
+    }
+
+    public Set<String> getCharacteristics() {
+        return characteristics;
+    }
+
+    public void addCharacteristics(String characteristics) {
+        this.characteristics.add(characteristics);
+    }
+
     private String conceptSubclass;
     private String url;
+
+    public void setCharacteristics(Set<String> characteristics) {
+        this.characteristics = characteristics;
+    }
+
     private Set<String> characteristics = new TreeSet<>();
     private Boolean foundInDB;
     private int accuracy = 1;
 
-    Concept() {
-        this.foundInDB = false;
-    }
+    Concept() { this.foundInDB = false; }
 
     public String getName() {
         return name;
@@ -23,11 +52,9 @@ public class Concept implements Comparable<Concept>{
         return conceptClass;
     }
 
-    public String getConceptSubclass() { return conceptSubclass; }
-
-    public String getUrl() { return url; }
-
-    public Set<String> getCharacteristics() { return characteristics; }
+    public String getUrl() {
+        return url;
+    }
 
     public int getAccuracy() { return accuracy; }
 
@@ -39,20 +66,10 @@ public class Concept implements Comparable<Concept>{
         this.conceptClass = conceptClass;
     }
 
-    public void setConceptSubclass(String conceptSubclass) { this.conceptSubclass = conceptSubclass; }
-
     public void setUrl(String url) {
         this.url = url;
     }
 
-    public void setCharacteristics(Set<String> characteristics) { this.characteristics.addAll(characteristics); }
-
-    public void setCharacteristics(String... characteristics) {
-        for (String characteristic: characteristics)
-            this.characteristics.add(characteristic);
-    }
-
-    public void setAccuracy(int accuracy) { this.accuracy = accuracy; }
 
     public void setFoundInDB(Boolean foundInDB) {
         this.foundInDB = foundInDB;
@@ -61,8 +78,6 @@ public class Concept implements Comparable<Concept>{
     public Boolean getFoundInDB() {
         return foundInDB;
     }
-
-    public void setClassName(String className) {this.className = className;}
 
     @Override
     public int compareTo(Concept obj) {
@@ -76,5 +91,19 @@ public class Concept implements Comparable<Concept>{
         } catch (NullPointerException e) {
             return 1;
         }
+    }
+
+
+    @Override
+    public String toString() {
+        return "Concept{" +
+                "name='" + name + '\'' +
+                ", conceptClass=" + className +
+                ", conceptSubclass='" + conceptSubclass + '\'' +
+                ", url='" + url + '\'' +
+                ", characteristics=" + characteristics +
+                ", foundInDB=" + foundInDB +
+                ", accuracy=" + accuracy +
+                '}';
     }
 }

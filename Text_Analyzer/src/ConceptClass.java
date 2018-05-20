@@ -3,10 +3,29 @@ import java.util.TreeSet;
 
 public class ConceptClass implements Comparable<ConceptClass>{
     private String nameClass;
+
+    public String getSubclass() {
+        return subclass;
+    }
+
+    public void setSubclass(String subclass) {
+        this.subclass = subclass;
+    }
+
+    public Set<String> getCharacteristics() {
+        return characteristics;
+    }
+
+    public void setCharacteristics(Set<String> characteristics) {
+        this.characteristics = characteristics;
+    }
+    public void addCharacteristics(String characteristic)
+    {
+        this.characteristics.add(characteristic);
+    }
     private String subclass;
     private Set<String> keywords = new TreeSet<>();
     private Set<String> characteristics = new TreeSet<>();
-
     ConceptClass(String nameClass) {
         this.nameClass = nameClass;
     }
@@ -20,13 +39,6 @@ public class ConceptClass implements Comparable<ConceptClass>{
             this.keywords.add(keyword);
     }
 
-    public void setCharacteristics(Set<String> characteristics) { this.characteristics.addAll(characteristics); }
-
-    public void setCharacteristics(String... characteristics) {
-        for (String characteristic : characteristics)
-            this.characteristics.add(characteristic);
-    }
-
     public String getNameClass() {
         return nameClass;
     }
@@ -34,12 +46,6 @@ public class ConceptClass implements Comparable<ConceptClass>{
     public Set<String> getKeywords() {
         return keywords;
     }
-
-    public Set<String> getCharacteristics() { return characteristics; }
-
-    public void setSubclass (String subclass) { this.subclass = subclass; }
-
-    public String getSubclass () { return this.subclass; }
 
     @Override
     public int compareTo(ConceptClass obj) {

@@ -1,6 +1,6 @@
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 // TODO: install jsoup first
 public class RegisterWiki implements Register {
     private LongMemory _memory;
@@ -9,34 +9,47 @@ public class RegisterWiki implements Register {
         this._memory = memory;
     }
 
-    public Concept register(String searchedWord, ConceptClass cc) {
-        try {
-            Document doc = Jsoup.connect("http://en.wikipedia.org/wiki/" + searchedWord).get();
+    public Concept searchWiki(String searchedWord, ConceptClass cc) {
+        htmlText doc = new htmlText("http://en.wikipedia.org/wiki/" + searchedWord);
+        boolean found = true;
+        String doctxt = doc.getText();
+        if (doc.getX() == htmlText.Found.yes) {
+            for (String keyword : cc.getKeywords()) {
 
-            boolean found = true;
-            for(String keyword: cc.getKeywords()) {
-                Elements e = doc.select(":matches(" + keyword + ")");
-                if (e.toString().length() == 0) {
+                if (!doctxt.contains(keyword)) {
                     found = false;
                     break;
                 }
             }
-            if (found)
-            {
-                System.out.println("found");
+            if (found) {
                 Concept c = new Concept();
                 c.setConceptClass(cc);
-                c.setName(cc.getNameClass());
-                c.setFoundInDB(false);
+                c.setName(searchedWord);
+                c.setUrl("http://en.wikipedia.org/wiki/" + searchedWord);
+                c.setFoundInDB(true);
+                if(doctxt.contains(cc.getSubclass()))
+                {
+                    Pattern pattern = Pattern.compile(cc.getSubclass()+" "+"[a-zA-Z]+");
+
+                    Matcher matcher = pattern.matcher(doctxt);
+                    if(matcher.find())
+                        c.setConceptSubclass(matcher.group().replace(cc.getSubclass(),"").substring(1));
+                }
+                for (String characteristic :cc.getCharacteristics()
+                        ) {
+
+                    if(doctxt.contains(characteristic))
+                        c.addCharacteristics(characteristic);
+                }
+                c.setClassName(cc.getNameClass());
+
+                _memory.add(c,"concepts");
                 return c;
-            }
-            else
-            {
-                System.out.println("not found");
+            } else {
+
                 return new Concept();
             }
-        } catch (Exception ex) {
-            System.out.println(ex);
+
         }
 
         return new Concept();
