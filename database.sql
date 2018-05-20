@@ -3,12 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 07, 2018 at 05:32 PM
+-- Generation Time: May 20, 2018 at 11:33 AM
 -- Server version: 5.7.21
--- PHP Version: 5.6.35
+-- PHP Version: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `brain`
 --
-CREATE DATABASE IF NOT EXISTS `brain` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `brain`;
 
 -- --------------------------------------------------------
 
@@ -32,20 +29,27 @@ USE `brain`;
 
 DROP TABLE IF EXISTS `concepts`;
 CREATE TABLE IF NOT EXISTS `concepts` (
-  `concept_key` varchar(100) NOT NULL,
-  `concept_name` varchar(100) NOT NULL,
-  `concept_class_name` varchar(100) NOT NULL,
-  `concept_class_keywords` varchar(1000) NOT NULL,
-  `concept_url` varchar(1000) NOT NULL,
-  UNIQUE KEY `key_index` (`concept_key`)
+  `key_concept` varchar(100) NOT NULL,
+  `class_name` varchar(100) NOT NULL,
+  `link` varchar(1000) NOT NULL,
+  PRIMARY KEY (`key_concept`),
+  KEY `indx` (`key_concept`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `concepts`
+-- Table structure for table `concepts_class`
 --
 
-INSERT INTO `concepts` (`concept_key`, `concept_name`, `concept_class_name`, `concept_class_keywords`, `concept_url`) VALUES
-('labrador', 'caine', 'animal', 'patruped,dog', 'wiki....');
+DROP TABLE IF EXISTS `concepts_class`;
+CREATE TABLE IF NOT EXISTS `concepts_class` (
+  `name_class` varchar(100) NOT NULL,
+  `subclass` varchar(100) NOT NULL,
+  `keywords` varchar(1000) NOT NULL,
+  `characteristics` varchar(1000) NOT NULL,
+  PRIMARY KEY (`name_class`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
