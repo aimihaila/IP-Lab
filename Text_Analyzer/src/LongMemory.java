@@ -61,8 +61,11 @@ public class LongMemory {
                 if(resultSet.next()) {
                     ((Concept) obj).setFoundInDB(true);
                     ((Concept) obj).setName(resultSet.getString("key_concept"));
+                    ((Concept) obj).setClassName(resultSet.getString("class"));
+                    ((Concept) obj).setConceptSubclass(resultSet.getString("subclass"));
                     ((Concept) obj).setUrl(resultSet.getString("link"));
-                    ((Concept) obj).setClassName("class_name");
+                    String[] chars = resultSet.getString("characteristic").split(",");
+                    ((Concept) obj).setCharacteristics(new TreeSet<>(Arrays.asList(chars)));
                 }
             }
             catch (SQLException e) {

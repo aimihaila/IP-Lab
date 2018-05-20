@@ -30,8 +30,10 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `concepts`;
 CREATE TABLE IF NOT EXISTS `concepts` (
   `key_concept` varchar(100) NOT NULL,
-  `class_name` varchar(100) NOT NULL,
-  `link` varchar(1000) NOT NULL,
+  `class` varchar(100) NOT NULL,
+  `subclass` varchar(100) NOT NULL,
+  `characteristic` varchar(1000) NOT NULL,
+  `link` varchar(100) NOT NULL
   PRIMARY KEY (`key_concept`),
   KEY `indx` (`key_concept`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
