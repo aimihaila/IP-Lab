@@ -90,11 +90,11 @@ public class LongMemory {
         return obj;
     }
 
-    public void add(Concept concept, String table) {
+    public void add(Object object, String table) {
         if(table.equals("concepts")) {
-            if (!concept.getCharacteristics().isEmpty()) {
+            if (!((Concept)object).getCharacteristics().isEmpty()) {
                 String characteristics = "";
-                for (String characteristic : concept.getCharacteristics()) { //traverse Set of characteristics and add them in characteristics String
+                for (String characteristic : ((Concept)object).getCharacteristics()) { //traverse Set of characteristics and add them in characteristics String
                     if (!characteristic.equals("") && !characteristic.equals(null))
                         characteristics += characteristic + ",";
                 }
@@ -102,12 +102,12 @@ public class LongMemory {
 
                 String query = "INSERT INTO concepts (key_concept, class, subclass, characteristic, link) " +
                         "       VALUES " +
-                        "       ('" + concept.getName() + "','" + concept.getConceptClass().getNameClass() + "','" + concept.getConceptSubclass() + "','" + characteristics + "','" + concept.getUrl() + "')";
+                        "       ('" + ((Concept) object).getName() + "','" + ((Concept) object).getConceptClass().getNameClass() + "','" + ((Concept) object).getConceptSubclass() + "','" + characteristics + "','" + ((Concept) object).getUrl() + "')";
                 try {
                     Statement statement = connection.createStatement();
                     int resultSet = statement.executeUpdate(query);
                     if (resultSet == 1) {
-                        concept.setFoundInDB(true);
+                        ((Concept)object).setFoundInDB(true);
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -117,29 +117,26 @@ public class LongMemory {
             }
         } else {
             if(table.equals("concepts_class")) {
-                if (!concept.getConceptClass().getCharacteristics().isEmpty() && !concept.getConceptClass().getKeywords().isEmpty()) {
+                if (!((ConceptClass) object).getCharacteristics().isEmpty() && !((ConceptClass) object).getKeywords().isEmpty()) {
                     String characteristics = "";
-                    for (String characteristic : concept.getConceptClass().getCharacteristics()) { //traverse Set of characteristics and add them in characteristics String
+                    for (String characteristic : ((ConceptClass) object).getCharacteristics()) { //traverse Set of characteristics and add them in characteristics String
                         if (!characteristic.equals("") && !characteristic.equals(null))
                             characteristics += characteristic + ",";
                     }
                     characteristics = characteristics.substring(0, characteristics.length() - 1);
 
                     String keywords = "";
-                    for (String keyword : concept.getConceptClass().getKeywords()) { //traverse Set of keywords and add them in keywords String
+                    for (String keyword : ((ConceptClass) object).getKeywords()) { //traverse Set of keywords and add them in keywords String
                         if (!keyword.equals("") && !keyword.equals(null))
                             keywords += keyword + ",";
                     }
 
                     String query = "INSERT INTO concepts_class (name_class, subclass, keywords, characteristics) " +
                             "       VALUES " +
-                            "       ('" + concept.getConceptClass().getNameClass() + "','" + concept.getConceptClass().getSubclass() + "','" + keywords + "','" + characteristics + "')";
+                            "       ('" + ((ConceptClass) object).getNameClass() + "','" + ((ConceptClass) object).getSubclass() + "','" + keywords + "','" + characteristics + "')";
                     try {
                         Statement statement = connection.createStatement();
-                        int resultSet = statement.executeUpdate(query);
-                        if (resultSet == 1) {
-                            concept.setFoundInDB(true);
-                        }
+                        statement.executeUpdate(query);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
