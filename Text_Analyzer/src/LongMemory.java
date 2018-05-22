@@ -12,10 +12,8 @@ import java.util.TreeSet;
 public class LongMemory {
     private Connection connection;
 
-    public LongMemory() {
-        String url = "jdbc:mysql://localhost:3306/brain?autoReconnect=true&useSSL=false"; //database url with auto reconnect and SSL disabled
-        String username = "root";
-        String password = "";
+    public LongMemory(String link, String database, String username, String password) { //full control of the connection to the database
+        String url = "jdbc:mysql://" + link + ":3306/" + database + "?autoReconnect=true&useSSL=false";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url,username,password); //try to connect to the database
@@ -23,30 +21,19 @@ public class LongMemory {
         catch (Exception e) {
             System.err.println("Connection error: " + e); //catch the connection error
         }
+    }
+
+    public LongMemory() { //connect with the default settings to the database
+        this("localhost","brain","root","");
     }
 
     public LongMemory(String database) { //specify to which database to connect
-        String url = "jdbc:mysql://localhost:3306/" + database + "?autoReconnect=true&useSSL=false"; //database url with auto reconnect and SSL disabled
-        String username = "root";
-        String password = "";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url,username,password); //try to connect to the database
-        }
-        catch (Exception e) {
-            System.err.println("Connection error: " + e); //catch the connection error
-        }
+        this("localhost",database,"root","");
     }
 
     public LongMemory(String database, String username, String password) { //specify to which database to connect along with the username and password
-        String url = "jdbc:mysql://localhost:3306/" + database + "?autoReconnect=true&useSSL=false"; //database url with auto reconnect and SSL disabled
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url,username,password); //try to connect to the database
-        }
-        catch (Exception e) {
-            System.err.println("Connection error: " + e); //catch the connection error
-        }
+        this("localhost",database,username,password);
+
     }
 
     public Object search(String table_name, String key) {
