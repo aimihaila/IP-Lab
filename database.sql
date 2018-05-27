@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `concepts` (
   `class` varchar(100) NOT NULL,
   `subclass` varchar(100) NOT NULL,
   `characteristic` varchar(1000) NOT NULL,
-  `link` varchar(100) NOT NULL
+  `link` varchar(100) NOT NULL,
   PRIMARY KEY (`key_concept`),
   KEY `indx` (`key_concept`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
